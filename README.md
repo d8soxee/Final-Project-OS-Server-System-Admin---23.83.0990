@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/e96f15f9-740f-450d-a09c-94936af6237d)# Final-Project-OS-Server-System-Admin---23.83.0990
+# Final-Project-OS-Server-System-Admin---23.83.0990
 
 Repository ini saya gunakan untuk Dokumentasi Instalasi dan Konfigurasi layanan Server, seperti SSH, DNS, WEB, NTP, Mail Server dll. Beberapa Service yang dijelaskan dalam Repository ini masih dalam progres
 
