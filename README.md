@@ -11,6 +11,10 @@ Ubuntu server 22.04.5 https://releases.ubuntu.com/jammy/ubuntu-22.04.5-desktop-a
 sudo apt update
 sudo apt install openssh-server
 
+bash 
+sudo apt update
+sudo apt install openssh-server
+
 ### Konfigurasi Keamanan
 sudo nano /etc/ssh/sshd_config
 
