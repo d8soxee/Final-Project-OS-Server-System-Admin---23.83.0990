@@ -3,7 +3,7 @@ Server's Name : MineShraft
 
 Repository ini saya gunakan untuk Dokumentasi Instalasi dan Konfigurasi layanan Server, SSH Server, Web Server, Database Server, File Server, DNS Server, Proxy Server, Dedicated Server Minecraft 
 
-                                                                                                                                                                              **10 Desember 2024**
+**10 Desember 2024**
 # OPERATING SYSTEM
 Ubuntu server 20.04
 ---
