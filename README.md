@@ -34,17 +34,20 @@ SSH memungkinkan akses jarak jauh ke server.
    ```bash
    sudo nano /etc/ssh/sshd_config
    ```
+   perintah ini digunakan untuk membuka file konfigurasi SSH daemon dengan hak akses superuser agar pengguna dapat melakukan perubahan pada pengaturan SSH.
+   
    Pastikan parameter berikut:
    ```plaintext
    PermitRootLogin no
    PasswordAuthentication yes
    ```
+   
    Restart layanan:
    ```bash
    sudo systemctl restart ssh
    ```
 
-3. **Uji Koneksi**:
+4. **Uji Koneksi**:
    Dari perangkat lain:
    ```bash
    ssh username@192.168.1.36
