@@ -4,7 +4,7 @@ Server's Name : MineShraft
 Repository ini saya gunakan untuk Dokumentasi Instalasi dan Konfigurasi layanan Server, SSH Server, Web Server, Database Server, File Server, DNS Server, Proxy Server, Dedicated Server Minecraft 
 
 # OPERATING SYSTEM
-Ubuntu server 20.04.6 
+Ubuntu server 20.04
 ---
 
 ### **Persiapan Awal**
@@ -13,14 +13,6 @@ Ubuntu server 20.04.6
    - Saat instalasi, gunakan:
      - **Hostname**: `mineshraft`.
      - **IP Statik**: `192.168.1.36`.
-
-   Contoh konfigurasi IP:
-   ```plaintext
-   Address: 192.168.1.36
-   Netmask: 255.255.255.0
-   Gateway: 192.168.1.1
-   DNS: 8.8.8.8
-   ```
 
 2. **Login**:
    Masuk dengan kredensial yang dibuat saat instalasi.
