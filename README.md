@@ -3,11 +3,10 @@ Server's Name : MineShraft
 
 Repository ini saya gunakan untuk Dokumentasi Instalasi dan Konfigurasi layanan Server, SSH Server, Web Server, Database Server, File Server, DNS Server, Proxy Server, Dedicated Server Minecraft 
 
-**10 Desember 2024**
 # OPERATING SYSTEM
 Ubuntu server 20.04
 ---
-
+**10 Desember 2024**
 ### **Persiapan Awal**
 1. **Install Ubuntu Server 20.04**:
    - Unduh dari [Ubuntu Server](https://ubuntu.com/download/server).
@@ -54,9 +53,8 @@ SSH memungkinkan akses jarak jauh ke server.
    ```
 
 ---
-```bash
-16-December-2024
-```
+**16-December-2024**
+
 ### **2. Setup Web Server untuk Pterodactyl**
 Panel Pterodactyl membutuhkan **Nginx**, **PHP**, dan **Composer**.
 
