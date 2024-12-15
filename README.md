@@ -54,9 +54,77 @@ SSH memungkinkan akses jarak jauh ke server.
    ```
 
 ---
-
+```bash
+16-December-2024
+```
 ### **2. Setup Web Server untuk Pterodactyl**
 Panel Pterodactyl membutuhkan **Nginx**, **PHP**, dan **Composer**.
+
+1. **Instalasi Depedency**:
+   ```bash
+   # Add "add-apt-repository" command
+   apt -y install software-properties-common curl apt-transport-https ca-certificates gnupg
+
+   # Add additional repositories for PHP (Ubuntu 20.04 and Ubuntu 22.04)
+   LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php
+   
+   # Add Redis official APT repository
+   curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg
+   echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list
+
+   # MariaDB repo setup script (Ubuntu 20.04)
+   curl -sS https://downloads.mariadb.com/MariaDB/mariadb_repo_setup | sudo bash
+
+   # Update repositories list
+   apt update
+
+   # Install Dependencies
+   apt -y install php8.3 php8.3-{common,cli,gd,mysql,mbstring,bcmath,xml,fpm,curl,zip} mariadb-server nginx tar unzip git redis-server
+   ```
+2. **Menginstall Composer**
+   Composer adalah pengelola dependensi untuk PHP yang memungkinkan kita mengirimkan semua kode yang Anda perlukan untuk mengoperasikan Panel.
+   ```bash
+   curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+   ```
+3. **Mengunduh File**
+   proses ini adalah membuat folder tempat panel akan berada, lalu memindahkannya ke folder yang baru dibuat tersebut.
+   ```bash
+   mkdir -p /var/www/pterodactyl
+   cd /var/www/pterodactyl
+   ```
+   Setelah membuat direktori baru untuk Panel dan memindahkannya, Kita perlu mengunduh file Panel. Ini semudah mengunduh curlkonten yang telah dikemas sebelumnya. Setelah diunduh, perlu membongkar arsip dan kemudian menetapkan izin yang benar pada direktori storage/dan    bootstrap/cache/. Direktori ini memungkinkan kita untuk menyimpan file serta menyediakan cache yang cepat untuk mengurangi waktu load.
+   ```bash
+   curl -Lo panel.tar.gz https://github.com/pterodactyl/panel/releases/latest/download/panel.tar.gz
+   tar -xzvf panel.tar.gz
+   chmod -R 755 storage/* bootstrap/cache/
+   ```
+4. **Instalasi**
+   Sekarang semua file sudah didownload, kita perlu mengkonfigurasi beberapa aspek inti panel
+   Konfigurasi DataBase
+
+   Anda memerlukan pengaturan database dan pengguna dengan izin yang tepat yang dibuat untuk database tersebut.
+   ```bash
+   # If using MySQL
+   mysql_secure_installation
+
+   mysql -u root -p
+   
+   # Remember to change 'yourPassword' below to be a unique password
+   CREATE USER 'pterodactyl'@'127.0.0.1' IDENTIFIED BY 'yourPassword';
+   CREATE DATABASE panel;
+   GRANT ALL PRIVILEGES ON panel.* TO 'pterodactyl'@'127.0.0.1' WITH GRANT OPTION;
+   exit
+   ```
+   
+   Pertama-tama kita akan menyalin default environment settings file kita, menginstal dependensi inti, dan kemudian membuat kunci enkripsi aplikasi baru.
+ ```bash
+   cp .env.example .env
+   COMPOSER_ALLOW_SUPERUSER=1 composer install --no-dev --optimize-autoloader
+
+   # Only run the command below if you are installing this Panel for
+   # the first time and do not have any Pterodactyl Panel data in the database.
+   php artisan key:generate --force
+   ```
 
 1. **Install Nginx dan PHP**:
    ```bash
