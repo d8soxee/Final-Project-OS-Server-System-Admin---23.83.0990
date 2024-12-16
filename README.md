@@ -334,6 +334,190 @@ Alokasi adalah kombinasi IP dan Port yang dapat Anda tetapkan ke server. Setiap 
 ![PteroConsole](https://github.com/user-attachments/assets/3affd587-3bc8-426c-83ae-d24710884720)
 Jangan gunakan 127.0.0.1 untuk alokasi.
 
+
+### **4. File Server (Samba)**
+1. **Install Samba**
+```bash
+sudo apt update
+sudo apt install samba -y
+```
+2. **Konfigurasi Direktori Berbagi**
+Buat direktori untuk berbagi file:
+```bash
+sudo mkdir -p /srv/samba/share
+sudo chmod 777 /srv/samba/share
+```
+Tambahkan beberapa file sebagai contoh:
+```bash
+echo "Selamat datang di File Server" | sudo tee /srv/samba/share/welcome.txt
+```
+3. **Edit Konfigurasi Samba**
+Buka file konfigurasi Samba:
+```bash
+sudo nano /etc/samba/smb.conf
+```
+Tambahkan konfigurasi berikut di bagian bawah file:
+ini
+```bash
+[Share]
+path = /srv/samba/share
+browseable = yes
+writable = yes
+guest ok = yes
+read only = no
+force user = nobody
+```
+Simpan file dan keluar.
+4. **Restart Samba**
+```bash
+sudo systemctl restart smbd
+```
+5. **Verifikasi dan Akses**
+Verifikasi Samba berjalan:
+```bash
+sudo systemctl status smbd
+```
+Akses dari komputer lain menggunakan alamat \\192.168.1.36\Share di File Explorer (Windows) atau menggunakan pengelola file di Linux.
+
+### **5. DNS Server (Bind9)**
+1. **Install Bind9**
+```bash
+sudo apt update
+sudo apt install bind9 bind9utils bind9-doc -y
+```
+2. **Konfigurasi File Zona**
+Buat file zona untuk domain Anda:
+
+```bash
+sudo nano /etc/bind/db.mineshraft
+Tambahkan isi berikut (sesuaikan IP dengan server Anda):
+
+bind
+Salin kode
+$TTL    604800
+@       IN      SOA     mineshraft.com. admin.mineshraft.com. (
+                        2023121601 ; Serial
+                        604800     ; Refresh
+                        86400      ; Retry
+                        2419200    ; Expire
+                        604800 )   ; Negative Cache TTL
+;
+@       IN      NS      ns.mineshraft.com.
+ns      IN      A       192.168.1.36
+panel   IN      A       192.168.1.36
+files   IN      A       192.168.1.36
+```
+Tambahkan file zona ke konfigurasi Bind:
+
+```bash
+sudo nano /etc/bind/named.conf.local
+```
+Tambahkan konfigurasi berikut:
+```bash
+bind
+zone "mineshraft.com" {
+    type master;
+    file "/etc/bind/db.mineshraft";
+};
+```
+3. **Restart Bind9**
+```bash
+sudo systemctl restart bind9
+```
+
+4. **Verifikasi Konfigurasi**
+Uji konfigurasi Bind:
+```bash
+sudo named-checkconf
+```
+
+Verifikasi file zona:
+
+```bash
+sudo named-checkzone mineshraft.com /etc/bind/db.mineshraft
+```
+### **6. VPN Server (WireGuard)**
+1. **Install WireGuard
+```bash
+sudo apt update
+sudo apt install wireguard -y
+```
+2. **Konfigurasi WireGuard**
+Buat direktori konfigurasi dan file kunci:
+
+```bash
+sudo mkdir -p /etc/wireguard
+sudo chmod 700 /etc/wireguard
+wg genkey | sudo tee /etc/wireguard/server_private.key | wg pubkey | sudo tee /etc/wireguard/server_public.key
+```
+Catat kunci pribadi dan publik.
+
+Buat file konfigurasi:
+
+```bash
+sudo nano /etc/wireguard/wg0.conf
+```
+Tambahkan isi berikut:
+```bash
+ini
+[Interface]
+Address = 10.0.0.1/24
+SaveConfig = true
+ListenPort = 51820
+PrivateKey = <ServerPrivateKey>
+PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+
+[Peer]
+PublicKey = <ClientPublicKey>
+AllowedIPs = 10.0.0.2/32
+```
+Ganti <ServerPrivateKey> dan <ClientPublicKey> dengan kunci yang sesuai.
+
+3. **Aktifkan IP Forwarding**
+Buka file sysctl:
+```bash
+sudo nano /etc/sysctl.conf
+```
+Cari dan hapus komentar pada baris berikut:
+```bash
+net.ipv4.ip_forward=1
+```
+Terapkan perubahan:
+```bash
+sudo sysctl -p
+```
+4. **Jalankan WireGuard**
+```bash
+sudo systemctl enable --now wg-quick@wg0
+```
+5. **Konfigurasi Klien**
+Instal aplikasi WireGuard di perangkat Anda.
+Tambahkan konfigurasi klien:
+ini
+```bash
+[Interface]
+PrivateKey = <ClientPrivateKey>
+Address = 10.0.0.2/24
+
+[Peer]
+PublicKey = <ServerPublicKey>
+Endpoint = 192.168.1.36:51820
+AllowedIPs = 0.0.0.0/0, ::/0
+```
+
+Ganti kunci dan IP sesuai konfigurasi server Anda.
+
+
+
+
+
+
+
+
+
+
+
 ### **4. Setup File Server**
 Gunakan **Samba** untuk berbagi file.
 1. **Install Samba**:
