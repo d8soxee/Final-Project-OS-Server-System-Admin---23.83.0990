@@ -334,6 +334,7 @@ Alokasi adalah kombinasi IP dan Port yang dapat Anda tetapkan ke server. Setiap 
 ![PteroConsole](https://github.com/user-attachments/assets/3affd587-3bc8-426c-83ae-d24710884720)
 Jangan gunakan 127.0.0.1 untuk alokasi.
 
+**17 Desember 2024**
 
 ### **4. File Server (Samba)**
 1. **Install Samba**
@@ -341,7 +342,30 @@ Jangan gunakan 127.0.0.1 untuk alokasi.
 sudo apt update
 sudo apt install samba -y
 ```
-2. **Konfigurasi Direktori Berbagi**
+
+Sebelum melakukan Konfigurasi kita harus membuat username dan password Samba di Linux agar bisa diakses dari Windows.
+
+2. **Buat Username dan Password Samba**
+Pastikan user sudah ada di sistem Linux. Jika belum ada, buat user baru dengan perintah berikut (ganti sambauser dengan nama pengguna yang diinginkan):
+
+```bash
+sudo adduser sambauser
+```
+Anda akan diminta membuat password untuk user tersebut.
+Tambahkan user tersebut ke Samba. Gunakan perintah berikut untuk menambahkan user Samba dan mengatur passwordnya:
+
+```bash
+sudo smbpasswd -a sambauser
+```
+
+Anda akan diminta memasukkan password Samba untuk user tersebut.
+Aktifkan user Samba. Pastikan user Samba diaktifkan dengan perintah:
+
+```bash
+sudo smbpasswd -e sambauser
+```
+
+3. **Konfigurasi Direktori Berbagi**
 Buat direktori untuk berbagi file:
 ```bash
 sudo mkdir -p /srv/samba/share
@@ -351,7 +375,7 @@ Tambahkan beberapa file sebagai contoh:
 ```bash
 echo "Selamat datang di File Server" | sudo tee /srv/samba/share/welcome.txt
 ```
-3. **Edit Konfigurasi Samba**
+4. **Edit Konfigurasi Samba**
 Buka file konfigurasi Samba:
 ```bash
 sudo nano /etc/samba/smb.conf
@@ -361,23 +385,38 @@ ini
 ```bash
 [Share]
 path = /srv/samba/share
-browseable = yes
-writable = yes
-guest ok = yes
+valid users = sambauser
 read only = no
-force user = nobody
+browsable = yes
+create mask = 0660
+directory mask = 0770
 ```
 Simpan file dan keluar.
-4. **Restart Samba**
+5. **Restart Samba**
 ```bash
 sudo systemctl restart smbd
 ```
-5. **Verifikasi dan Akses**
+6. **Verifikasi dan Akses**
 Verifikasi Samba berjalan:
 ```bash
 sudo systemctl status smbd
 ```
-Akses dari komputer lain menggunakan alamat \\192.168.1.36\Share di File Explorer (Windows) atau menggunakan pengelola file di Linux.
+7. **Akses Share dari Windows**
+Buka File Explorer di Windows.
+Masukkan alamat jaringan Samba di address bar:
+mathematica
+```bash
+\\IP_ADDRESS_LINUX\Share
+Contoh: \\192.168.1.36\Share
+```
+
+Saat diminta Enter network credentials, masukkan:
+```bash
+Username: sambauser
+Password: Password Samba yang Anda atur sebelumnya.
+Centang "Remember my credentials" jika ingin menyimpan kredensial.
+```
+![image](https://github.com/user-attachments/assets/5db71d59-03e1-4c99-913a-790a31831284)
 
 ### **5. DNS Server (Bind9)**
 1. **Install Bind9**
