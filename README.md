@@ -418,6 +418,126 @@ Centang "Remember my credentials" jika ingin menyimpan kredensial.
 ```
 ![image](https://github.com/user-attachments/assets/5db71d59-03e1-4c99-913a-790a31831284)
 
-### **5. DNS Server (Bind9)**
+### **5. Mail Server**
+Langkah 1: Memasang Postfix (Mail Transfer Agent)
+Update repositori Ubuntu: Pertama, pastikan sistem Ubuntu Anda diperbarui ke versi terbaru dengan menjalankan perintah berikut:
 
+bash
+sudo apt update && sudo apt upgrade -y
+Install Postfix: Postfix adalah Mail Transfer Agent (MTA) yang akan digunakan untuk mengirimkan email. Untuk menginstal Postfix, jalankan perintah:
 
+bash
+sudo apt install postfix -y
+Selama proses instalasi, Anda akan diminta untuk memilih konfigurasi Postfix. Pilih opsi Internet Site dan masukkan nama domain yang akan digunakan, misalnya mineshraft.com.
+
+Verifikasi Instalasi Postfix: Setelah instalasi selesai, Anda dapat memverifikasi apakah Postfix berjalan dengan perintah berikut:
+
+bash
+Salin kode
+sudo systemctl status postfix
+Pastikan statusnya active (running).
+
+Langkah 2: Menginstal Dovecot (IMAP/POP3 Server)
+Dovecot adalah server IMAP dan POP3 yang digunakan untuk menerima email.
+
+Install Dovecot: Jalankan perintah berikut untuk menginstal Dovecot:
+
+bash
+Salin kode
+sudo apt install dovecot-core dovecot-imapd dovecot-pop3d -y
+Verifikasi Instalasi Dovecot: Setelah selesai, pastikan Dovecot berjalan dengan perintah:
+
+bash
+Salin kode
+sudo systemctl status dovecot
+Statusnya harus active (running).
+
+Langkah 3: Mengonfigurasi DNS untuk Mail Server
+Agar server Anda dapat mengirim dan menerima email secara benar, Anda perlu mengonfigurasi DNS.
+
+Set DNS A Record dan MX Record:
+Buat A record untuk mail.mineshraft.com yang menunjuk ke IP publik server Ubuntu.
+Setel MX record yang mengarah ke mail.mineshraft.com dengan prioritas 10.
+Langkah 4: Konfigurasi Postfix
+Edit konfigurasi Postfix: Buka file konfigurasi Postfix:
+
+bash
+Salin kode
+sudo nano /etc/postfix/main.cf
+Sesuaikan pengaturan berikut:
+
+myhostname: mail.mineshraft.com
+mydomain: mineshraft.com
+myorigin: mineshraft.com
+inet_interfaces: all
+inet_protocols: ipv4
+mydestination: localhost.localdomain, localhost, mail.mineshraft.com, mineshraft.com
+Setelah selesai, simpan dan keluar (Ctrl+X, Y, Enter).
+
+Restart Postfix: Setelah mengonfigurasi Postfix, restart layanan Postfix agar perubahan konfigurasi diterapkan:
+
+bash
+Salin kode
+sudo systemctl restart postfix
+Langkah 5: Mengonfigurasi WebMail (Roundcube)
+Untuk mengakses email menggunakan webmail, kita akan menggunakan Roundcube, aplikasi webmail berbasis PHP.
+
+Install Apache2 dan PHP: Roundcube membutuhkan Apache dan PHP untuk menjalankan antarmuka webnya. Install Apache2 dan PHP:
+
+bash
+Salin kode
+sudo apt install apache2 php php-mbstring php-xml php-mysql php-curl php-imap libapache2-mod-php -y
+Install Roundcube: Install paket Roundcube dengan perintah berikut:
+
+bash
+Salin kode
+sudo apt install roundcube roundcube-core roundcube-mysql -y
+Konfigurasi Roundcube: Setelah instalasi selesai, Anda akan diminta untuk mengonfigurasi Roundcube. Pilih dbconfig-common untuk mengonfigurasi database otomatis.
+
+Pilih opsi MySQL untuk database backend.
+Isi detail database untuk Roundcube (Username, Password) dan konfirmasi konfigurasi.
+Sesuaikan Konfigurasi Apache untuk Roundcube: Roundcube akan diakses melalui browser di server Apache. Setelah instalasi selesai, pastikan konfigurasi Apache untuk Roundcube telah diaktifkan:
+
+bash
+Salin kode
+sudo ln -s /etc/roundcube/apache.conf /etc/apache2/sites-available/roundcube.conf
+sudo a2ensite roundcube.conf
+sudo systemctl restart apache2
+Akses Roundcube via Web Browser: Sekarang, Anda bisa mengakses Roundcube di browser Anda melalui URL berikut:
+
+arduino
+Salin kode
+http://192.168.1.36/roundcube
+Gantilah 192.168.1.36 dengan IP server Ubuntu Anda.
+
+Langkah 6: Mengonfigurasi Firewall (UFW)
+Jika firewall diaktifkan di server Ubuntu, pastikan untuk membuka port yang diperlukan oleh server mail dan webmail:
+
+Buka port yang diperlukan:
+
+bash
+Salin kode
+sudo ufw allow 25,143,587,993,80/tcp
+sudo ufw allow 443/tcp
+sudo ufw enable
+Verifikasi status UFW: Pastikan aturan firewall sudah diterapkan dengan benar:
+
+bash
+Salin kode
+sudo ufw status
+Langkah 7: Tes dan Verifikasi
+Tes Mengirim Email: Akses Roundcube via browser (misalnya, http://192.168.1.36/roundcube) dan coba kirim email untuk memastikan server berfungsi dengan baik.
+
+Tes Menerima Email: Kirim email dari akun lain dan pastikan email tersebut muncul di inbox akun yang Anda gunakan di Roundcube.
+
+Langkah 8: (Opsional) Mengonfigurasi SSL/TLS
+Untuk meningkatkan keamanan email Anda, disarankan untuk mengonfigurasi SSL/TLS untuk enkripsi email. Anda dapat menggunakan sertifikat dari Let's Encrypt atau sertifikat SSL lainnya.
+
+Install Certbot untuk SSL:
+
+bash
+Salin kode
+sudo apt install certbot python3-certbot-apache -y
+Perbarui Konfigurasi Apache untuk SSL: Setelah Anda mendapatkan sertifikat SSL, update konfigurasi Apache dan restart layanan.
+
+Dengan mengikuti langkah-langkah di atas, Anda telah berhasil menginstal dan mengonfigurasi Mail Server di Ubuntu yang dapat diakses melalui WebMail menggunakan Roundcube. Pastikan untuk selalu memeriksa log dan memastikan port yang digunakan dapat diakses dari luar untuk mengirim dan menerima email dengan 
