@@ -331,9 +331,8 @@ sudo systemctl enable --now wings
 7. **Alokasi Node**
 Alokasi adalah kombinasi IP dan Port yang dapat Anda tetapkan ke server. Setiap server yang dibuat harus memiliki setidaknya satu alokasi. Alokasi akan menjadi alamat IP antarmuka jaringan Anda. Dalam beberapa kasus, seperti saat berada di belakang NAT, alamat IP internal akan menjadi alamat IP. Untuk membuat alokasi baru, buka Node > node Anda > Alokasi.
 ![PteroNodes2](https://github.com/user-attachments/assets/9ffc6d6f-36f1-4568-b7e5-a76f079a68c7)
-
+![PteroConsole](https://github.com/user-attachments/assets/3affd587-3bc8-426c-83ae-d24710884720)
 Jangan gunakan 127.0.0.1 untuk alokasi.
-
 
 ### **4. Setup File Server**
 Gunakan **Samba** untuk berbagi file.
