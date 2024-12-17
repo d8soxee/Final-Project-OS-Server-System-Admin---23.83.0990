@@ -1,7 +1,7 @@
 # Final-Project-OS-Server-System-Admin---23.83.0990
 Server's Name : MineShraft
 
-Repository ini saya gunakan untuk Dokumentasi Instalasi dan Konfigurasi Dedicated Server Minecraft, SSH Server, Web Server, Database Server, File Server, DNS Server, VPN Server. 
+Repository ini saya gunakan untuk Dokumentasi Instalasi dan Konfigurasi Dedicated Server Minecraft, SSH Server, Web Server, Database Server, File Server, Mail Server. 
 
 # OPERATING SYSTEM
 Ubuntu server 20.04
