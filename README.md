@@ -1,4 +1,4 @@
-# Final-Project-OS-Server-System-Admin---23.83.0990
+![image](https://github.com/user-attachments/assets/4ce725d3-03c9-4612-9a97-6d1c849fe15f)# Final-Project-OS-Server-System-Admin---23.83.0990
 Server's Name : MineShraft
 
 Repository ini saya gunakan untuk Dokumentasi Instalasi dan Konfigurasi Dedicated Server Minecraft, SSH Server, Web Server, Database Server, File Server, Mail Server. 
@@ -12,7 +12,7 @@ Ubuntu server 20.04
    - Unduh dari [Ubuntu Server](https://ubuntu.com/download/server).
    - Saat instalasi, gunakan:
      - **Hostname**: `mineshraft`.
-     - **IP Statik**: `192.168.1.28`.
+     - **IP**: `192.168.40.210`.
 
 ---
 **21 Desember 2024**
@@ -85,7 +85,7 @@ Composer adalah pengelola dependensi untuk PHP yang memungkinkan kita mengirimka
 ```bash
 curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
 ```
-![Uploading image.png…]()
+![Composer](https://github.com/user-attachments/assets/d887f095-2f3e-4eae-beaf-7d1ba2f460d2)
 
 3. **Mengunduh File**
 proses ini adalah membuat folder tempat panel akan berada, lalu memindahkannya ke folder yang baru dibuat tersebut.
@@ -111,7 +111,7 @@ mysql_secure_installation
 mysql -u root -p
    
 # Remember to change 'yourPassword' below to be a unique password
-CREATE USER 'pterodactyl'@'127.0.0.1' IDENTIFIED BY 'yourPassword';
+CREATE USER 'pterodactyl'@'127.0.0.1' IDENTIFIED BY 'ptero123';
 CREATE DATABASE panel;
 GRANT ALL PRIVILEGES ON panel.* TO 'pterodactyl'@'127.0.0.1' WITH GRANT OPTION;
 exit
@@ -149,12 +149,6 @@ php artisan p:user:make
 ```bash
 # If using NGINX, Apache or Caddy (not on RHEL / Rocky Linux / AlmaLinux)
 chown -R www-data:www-data /var/www/pterodactyl/*
-
-# If using NGINX on RHEL / Rocky Linux / AlmaLinux
-chown -R nginx:nginx /var/www/pterodactyl/*
-
-# If using Apache on RHEL / Rocky Linux / AlmaLinux
-chown -R apache:apache /var/www/pterodactyl/*
 ```
 9. **Konfigurasi Crontab**
 Hal pertama yang perlu kita lakukan adalah membuat cronjob baru yang berjalan setiap menit untuk memproses tugas-tugas Pterodactyl tertentu, seperti pembersihan sesi dan pengiriman tugas-tugas terjadwal ke daemon. Kita perlu membuka crontab Anda menggunakan sudo crontab -edan kemudian menempelkan baris di bawah ini
