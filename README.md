@@ -12,45 +12,46 @@ Ubuntu server 20.04
    - Unduh dari [Ubuntu Server](https://ubuntu.com/download/server).
    - Saat instalasi, gunakan:
      - **Hostname**: `mineshraft`.
-     - **IP Statik**: `192.168.1.36`.
-
-2. **Login**:
-   Masuk dengan kredensial yang dibuat saat instalasi.
+     - **IP Statik**: `192.168.1.28`.
 
 ---
-
+**21 Desember 2024**
 ### **1. Setup SSH Server**
+1. **Mengaktifkan SSH di Ubuntu**
+Secara default, saat Ubuntu pertama kali diinstal, akses jarak jauh melalui SSH tidak diizinkan. Mengaktifkan SSH di Ubuntu cukup mudah.
+Lakukan langkah-langkah berikut sebagai root atau pengguna dengan menggunakan sudo untuk menginstal dan mengaktifkan SSH pada Ubuntu:
+```bash
+sudo apt update
+sudo apt install openssh-server
+```
+Saat diminta, masukkan kata sandi Anda dan tekan Enter untuk melanjutkan instalasi.
+
+Setelah instalasi selesai, layanan SSH akan mulai secara otomatis. Anda dapat memverifikasi bahwa SSH berjalan dengan mengetik:
+```bash
+sudo systemctl status ssh
+```
+Output akan memberi tahu Anda bahwa layanan sedang berjalan dan diaktifkan untuk memulai saat sistem melakukan boot:
+```bash
+● ssh.service - OpenBSD Secure Shell server
+    Loaded: loaded (/lib/systemd/system/ssh.service; enabled; vendor preset: enabled)
+    Active: active (running) since Mon 2024-12-21 15:13:16 CUTC; 27s ago
+```
+Tekan q untuk kembali ke prompt baris perintah.
+
+Ubuntu dilengkapi dengan alat konfigurasi firewall yang disebut UFW. Jika firewall diaktifkan pada sistem Anda, pastikan untuk membuka port SSH:
+```bash
+sudo ufw allow ssh
+```
+Selesai! Kini Anda dapat terhubung ke sistem Ubuntu melalui SSH dari komputer jarak jauh mana pun. Sistem Linux dan macOS telah memasang klien SSH secara default. Untuk terhubung dari komputer Windows, gunakan klien SSH seperti PuTTY .
+
+
+2. **Menghubungkan ke Server SSH**
+Untuk terhubung ke mesin Ubuntu Anda melalui LAN, jalankan perintah ssh diikuti dengan nama pengguna dan alamat IP dalam format berikut:
+```bash
+ssh username@ip_address
+```
+Pastikan Anda mengganti usernamedengan nama pengguna sebenarnya dan ip_addressdengan Alamat IP mesin Ubuntu tempat Anda menginstal SSH.
 SSH memungkinkan akses jarak jauh ke server.
-
-1. **Install OpenSSH**:
-   ```bash
-   sudo apt update
-   sudo apt install openssh-server -y
-   ```
-
-2. **Konfigurasi SSH**:
-   Edit file konfigurasi:
-   ```bash
-   sudo nano /etc/ssh/sshd_config
-   ```
-   perintah ini digunakan untuk membuka file konfigurasi SSH daemon dengan hak akses superuser agar pengguna dapat melakukan perubahan pada pengaturan SSH.
-   
-   Pastikan parameter berikut:
-   ```plaintext
-   PermitRootLogin no
-   PasswordAuthentication yes
-   ```
-   
-   Restart layanan:
-   ```bash
-   sudo systemctl restart ssh
-   ```
-
-4. **Uji Koneksi**:
-   Dari perangkat lain:
-   ```bash
-   ssh username@192.168.1.36
-   ```
 
 ---
 **16 Desember 2024**
