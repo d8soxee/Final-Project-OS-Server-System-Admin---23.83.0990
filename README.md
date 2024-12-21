@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/4ce725d3-03c9-4612-9a97-6d1c849fe15f)# Final-Project-OS-Server-System-Admin---23.83.0990
+# Final-Project-OS-Server-System-Admin---23.83.0990
 Server's Name : MineShraft
 
 Repository ini saya gunakan untuk Dokumentasi Instalasi dan Konfigurasi Dedicated Server Minecraft, SSH Server, Web Server, Database Server, File Server, Mail Server. 
