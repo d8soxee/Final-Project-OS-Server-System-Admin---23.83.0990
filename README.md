@@ -85,6 +85,8 @@ Composer adalah pengelola dependensi untuk PHP yang memungkinkan kita mengirimka
 ```bash
 curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
 ```
+![Uploading image.png…]()
+
 3. **Mengunduh File**
 proses ini adalah membuat folder tempat panel akan berada, lalu memindahkannya ke folder yang baru dibuat tersebut.
 ```bash
