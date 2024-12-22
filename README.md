@@ -13,6 +13,7 @@ Ubuntu server 20.04
 - **Hostname**: `mineshraft`.
 - **IP**: `192.168.40.210`.
 ---
+- **SSH**
 - **NGINX**
 - **PHP**
 - **COMPOSER**
