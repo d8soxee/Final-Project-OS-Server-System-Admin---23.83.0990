@@ -324,6 +324,7 @@ Kemudian, jalankan perintah di bawah ini untuk memuat ulang systemd dan menjalan
 ```bash
 sudo systemctl enable --now wings
 ```
+**22 Desember 2024**
 7. **Alokasi Node**
 Alokasi adalah kombinasi IP dan Port yang dapat Anda tetapkan ke server. Setiap server yang dibuat harus memiliki setidaknya satu alokasi. Alokasi akan menjadi alamat IP antarmuka jaringan Anda. Dalam beberapa kasus, seperti saat berada di belakang NAT, alamat IP internal akan menjadi alamat IP. Untuk membuat alokasi baru, buka Node > node Anda > Alokasi.
 ![PteroLogin](https://github.com/user-attachments/assets/f68303e1-cfef-438d-ae53-65b267ffde31)
@@ -333,6 +334,9 @@ Alokasi adalah kombinasi IP dan Port yang dapat Anda tetapkan ke server. Setiap 
 ![PteroDone](https://github.com/user-attachments/assets/402f9ba1-5e4b-4c8d-828a-373856bfb938)
 
 Jangan gunakan 127.0.0.1 untuk alokasi.
+Setealh itu Kita haru membuat server minecraft nya, dengan cara klik menu server pada sidebar.
+![image](https://github.com/user-attachments/assets/1839cce3-5019-4b78-8e15-8abcf5a96056)
+
 
 **17 Desember 2024**
 
