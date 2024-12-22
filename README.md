@@ -336,9 +336,11 @@ Alokasi adalah kombinasi IP dan Port yang dapat Anda tetapkan ke server. Setiap 
 Jangan gunakan 127.0.0.1 untuk alokasi.
 Setealh itu Kita haru membuat server minecraft nya, dengan cara klik menu server pada sidebar.
 ![image](https://github.com/user-attachments/assets/1839cce3-5019-4b78-8e15-8abcf5a96056)
+![PteroServerMIne](https://github.com/user-attachments/assets/330559f0-561b-4b98-81f2-21e6088d5be4)
+Setelah membuat server jalankan server dengan klik Start.
+![image](https://github.com/user-attachments/assets/8c531e0f-66dc-4ba9-afd4-ddc4266893b7)
 
-
-**17 Desember 2024**
+**22 Desember 2024**
 
 ### **4. File Server (Samba)**
 1. **Install Samba**
