@@ -14,13 +14,21 @@ Ubuntu server 20.04
 - **IP**: `192.168.40.210`.
 ---
 **NGINX**
+
 **PHP**
+
 **COMPOSER**
+
 **MYSQL**
-**Docker**
-**redis**
-**Wings(Pterodactyl Server Control Panel)
-**Samba**
+
+**DOCKER**
+
+**REDIS**
+
+**WINGS(Pterodactyl Server Control Panel)
+
+**SAMBA**
+---
 
 **21 Desember 2024**
 ### **Mengaktifkan SSH di Ubuntu**
