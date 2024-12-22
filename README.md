@@ -455,4 +455,21 @@ Username: sambauser
 Password: Password Samba yang Anda atur sebelumnya.
 Centang "Remember my credentials" jika ingin menyimpan kredensial.
 ```
-![image](https://github.com/user-attachments/assets/5db71d59-03e1-4c99-913a-790a31831284)
+![SambaDone](https://github.com/user-attachments/assets/8bd2cc28-ad46-4e70-b517-23c722118ebc)
+
+**Plugins**
+Agar Server Bisa menerima akses dari minecraft Java/Bedrock maupun yg minecraft bajakan, kita harus memasang plugins  terlebih dahulu pada server pterodactyl tersebut.
+```bash
+Plugins Geyser-Spigot
+https://geysermc.org/download/
+```
+Setelah selesai menginstall dan konfigurasi, kita sudah bisa menggunakan server tersebut.
+```bash
+Minecraft Tlauncher (Windows)
+```
+![MinecraftTest](https://github.com/user-attachments/assets/15b42e48-f1ad-49a0-8df3-f8c7f47d6dc4)
+![image](https://github.com/user-attachments/assets/12cea99c-ef0c-4108-aae8-ef97f9a8276b)
+
+```bash
+Minecraft (Android)
+```
