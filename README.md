@@ -7,13 +7,21 @@ Ubuntu server 20.04
 ---
 **10 Desember 2024**
 ### **Persiapan Awal**
-1. **Install Ubuntu Server 20.04**:
-   - Unduh dari [Ubuntu Server](https://ubuntu.com/download/server).
-   - Saat instalasi, gunakan:
-     - **Hostname**: `mineshraft`.
-     - **IP**: `192.168.40.210`.
-
+**Install Ubuntu Server 20.04**:
+- Unduh dari [Ubuntu Server](https://ubuntu.com/download/server).
+- Saat instalasi, gunakan:
+- **Hostname**: `mineshraft`.
+- **IP**: `192.168.40.210`.
 ---
+**NGINX**
+**PHP**
+**COMPOSER**
+**MYSQL**
+**Docker**
+**redis**
+**Wings(Pterodactyl Server Control Panel)
+**Samba**
+
 **21 Desember 2024**
 ### **Mengaktifkan SSH di Ubuntu**
 Secara default, saat Ubuntu pertama kali diinstal, akses jarak jauh melalui SSH tidak diizinkan. Mengaktifkan SSH di Ubuntu cukup mudah.
