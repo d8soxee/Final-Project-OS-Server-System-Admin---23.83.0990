@@ -13,21 +13,14 @@ Ubuntu server 20.04
 - **Hostname**: `mineshraft`.
 - **IP**: `192.168.40.210`.
 ---
-**NGINX**
-
-**PHP**
-
-**COMPOSER**
-
-**MYSQL**
-
-**DOCKER**
-
-**REDIS**
-
-**WINGS(Pterodactyl Server Control Panel)
-
-**SAMBA**
+- **NGINX**
+- **PHP**
+- **COMPOSER**
+- **MYSQL**
+- **DOCKER**
+- **REDIS**
+- **WINGS(Pterodactyl Server Control Panel)**
+- **SAMBA**
 ---
 
 **21 Desember 2024**
