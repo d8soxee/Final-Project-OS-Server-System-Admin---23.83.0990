@@ -1,9 +1,7 @@
-# Final-Project-OS-Server-System-Admin---23.83.0990
+# Final-Project-OS-Server-System-Admin---
+Nama : Qhomar Latif Praditya
 
-Repository ini saya gunakan untuk Dokumentasi Instalasi dan Konfigurasi Dedicated Server Minecraft, SSH Server, Web Server, Database Server, File Server, Mail Server. 
-
-# OPERATING SYSTEM
-Ubuntu server 20.04
+NIM : 23.83.0990
 ---
 **10 Desember 2024**
 ### **Persiapan Awal**
