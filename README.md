@@ -28,7 +28,8 @@ Server Service
 ---
 
 **21 Desember 2024**
-### **Mengaktifkan SSH di Ubuntu**
+**Mengaktifkan SSH di Ubuntu**
+
 Secara default, saat Ubuntu pertama kali diinstal, akses jarak jauh melalui SSH tidak diizinkan. Mengaktifkan SSH di Ubuntu cukup mudah.
 Lakukan langkah-langkah berikut sebagai root atau pengguna dengan menggunakan sudo untuk menginstal dan mengaktifkan SSH pada Ubuntu:
 ```bash
@@ -67,9 +68,7 @@ SSH memungkinkan akses jarak jauh ke server.
 ---
 **16 Desember 2024**
 
-### **Setup Database untuk Pterodactyl**
-Panel Pterodactyl membutuhkan **Nginx**, **PHP**, dan **Composer**.
-
+### **Setup Pterodactyl**
 **Instalasi Depedency**:
 ```bash
 # Add "add-apt-repository" command
@@ -91,7 +90,7 @@ apt update
 # Install Dependencies
 apt -y install php8.3 php8.3-{common,cli,gd,mysql,mbstring,bcmath,xml,fpm,curl,zip} mariadb-server nginx tar unzip git redis-server
 ```
-**Menginstall Composer**
+### **Menginstall Composer**
 
 Composer adalah pengelola dependensi untuk PHP yang memungkinkan kita mengirimkan semua kode yang Anda perlukan untuk mengoperasikan Panel.
 ```bash
@@ -370,18 +369,16 @@ Setelah itu Kita harus membuat server minecraft nya, dengan cara klik menu serve
 
 **22 Desember 2024**
 
-### **4. File Server (Samba)**
-1. **Install Samba**
+##**File Sharing Server (Samba)**
 ```bash
 sudo apt update
 sudo apt install samba -y
 ```
-
 Sebelum melakukan Konfigurasi kita harus membuat username dan password Samba di Linux agar bisa diakses dari Windows.
 
-2. **Buat Username dan Password Samba**
-Pastikan user sudah ada di sistem Linux. Jika belum ada, buat user baru dengan perintah berikut (ganti sambauser dengan nama pengguna yang diinginkan):
+**Buat Username dan Password Samba**
 
+Pastikan user sudah ada di sistem Linux. Jika belum ada, buat user baru dengan perintah berikut (ganti sambauser dengan nama pengguna yang diinginkan):
 ```bash
 sudo adduser sambauser
 ```
@@ -398,8 +395,8 @@ Aktifkan user Samba. Pastikan user Samba diaktifkan dengan perintah:
 ```bash
 sudo smbpasswd -e sambauser
 ```
+**Konfigurasi Direktori Berbagi**
 
-3. **Konfigurasi Direktori Berbagi**
 Buat direktori untuk berbagi file:
 ```bash
 sudo mkdir -p /srv/samba/share
@@ -409,7 +406,8 @@ Tambahkan beberapa file sebagai contoh:
 ```bash
 echo "Selamat datang di File Server" | sudo tee /srv/samba/share/welcome.txt
 ```
-4. **Edit Konfigurasi Samba**
+**Edit Konfigurasi Samba**
+
 Buka file konfigurasi Samba:
 ```bash
 sudo nano /etc/samba/smb.conf
@@ -425,23 +423,24 @@ browsable = yes
 create mask = 0660
 directory mask = 0770
 ```
-Simpan file dan keluar.
-5. **Restart Samba**
+Simpan file dan keluar. lalu restart Samba
 ```bash
 sudo systemctl restart smbd
 ```
-6. **Verifikasi dan Akses**
+**Verifikasi dan Akses**
+
 Verifikasi Samba berjalan:
 ```bash
 sudo systemctl status smbd
 ```
-7. **Akses Share dari Windows**
+**Akses Share dari Windows**
+
 Buka File Explorer di Windows.
 Masukkan alamat jaringan Samba di address bar:
 mathematica
 ```bash
 \\IP_ADDRESS_LINUX\Share
-Contoh: \\192.168.1.36\Share
+Contoh: \\192.168.40.210\Share
 ```
 
 Saat diminta Enter network credentials, masukkan:
@@ -451,132 +450,3 @@ Password: Password Samba yang Anda atur sebelumnya.
 Centang "Remember my credentials" jika ingin menyimpan kredensial.
 ```
 ![image](https://github.com/user-attachments/assets/5db71d59-03e1-4c99-913a-790a31831284)
-
-### **5. Mail Server**
-1. **Memasang Postfix (Mail Transfer Agent)**
-Update repositori Ubuntu: Pertama, pastikan sistem Ubuntu Anda diperbarui ke versi terbaru dengan menjalankan perintah berikut:
-
-```bash
-sudo apt update && sudo apt upgrade -y
-```
-Install Postfix: Postfix adalah Mail Transfer Agent (MTA) yang akan digunakan untuk mengirimkan email. Untuk menginstal Postfix, jalankan perintah:
-
-```bash
-sudo apt install postfix -y
-```
-Selama proses instalasi, Anda akan diminta untuk memilih konfigurasi Postfix. Pilih opsi Internet Site dan masukkan nama domain yang akan digunakan, misalnya mineshraft.com.
-
-Verifikasi Instalasi Postfix: Setelah instalasi selesai, Anda dapat memverifikasi apakah Postfix berjalan dengan perintah berikut:
-
-```bash
-sudo systemctl status postfix
-```
-Pastikan statusnya active (running).
-
-2. **Menginstal Dovecot (IMAP/POP3 Server)**
-Dovecot adalah server IMAP dan POP3 yang digunakan untuk menerima email.
-
-Install Dovecot: Jalankan perintah berikut untuk menginstal Dovecot:
-
-```bash
-sudo apt install dovecot-core dovecot-imapd dovecot-pop3d -y
-```
-Verifikasi Instalasi Dovecot: Setelah selesai, pastikan Dovecot berjalan dengan perintah:
-
-```bash
-sudo systemctl status dovecot
-Statusnya harus active (running).
-```
-
-3. **Mengonfigurasi DNS untuk Mail Server**
-Agar server Anda dapat mengirim dan menerima email secara benar, Anda perlu mengonfigurasi DNS.
-
-Set DNS A Record dan MX Record:
-Buat A record untuk mail.mineshraft.com yang menunjuk ke IP publik server Ubuntu.
-Setel MX record yang mengarah ke mail.mineshraft.com dengan prioritas 10.
-
-4. **Konfigurasi Postfix**
-Edit konfigurasi Postfix: Buka file konfigurasi Postfix:
-
-```bash
-sudo nano /etc/postfix/main.cf
-```
-Sesuaikan pengaturan berikut:
-```bash
-myhostname: mail.mineshraft.com
-mydomain: mineshraft.com
-myorigin: mineshraft.com
-inet_interfaces: all
-inet_protocols: ipv4
-mydestination: localhost.localdomain, localhost, mail.mineshraft.com, mineshraft.com
-```
-Setelah selesai, simpan dan keluar (Ctrl+X, Y, Enter).
-
-Restart Postfix: Setelah mengonfigurasi Postfix, restart layanan Postfix agar perubahan konfigurasi diterapkan:
-
-```bash
-sudo systemctl restart postfix
-```
-5. **Mengonfigurasi WebMail (Roundcube)**
-Untuk mengakses email menggunakan webmail, kita akan menggunakan Roundcube, aplikasi webmail berbasis PHP.
-
-Install Apache2 dan PHP: Roundcube membutuhkan Apache dan PHP untuk menjalankan antarmuka webnya. Install Apache2 dan PHP:
-
-```bash
-sudo apt install apache2 php php-mbstring php-xml php-mysql php-curl php-imap libapache2-mod-php -y
-```
-Install Roundcube: Install paket Roundcube dengan perintah berikut:
-
-```bash
-sudo apt install roundcube roundcube-core roundcube-mysql -y
-```
-Konfigurasi Roundcube: Setelah instalasi selesai, Anda akan diminta untuk mengonfigurasi Roundcube. Pilih dbconfig-common untuk mengonfigurasi database otomatis.
-
-Pilih opsi MySQL untuk database backend.
-Isi detail database untuk Roundcube (Username, Password) dan konfirmasi konfigurasi.
-Sesuaikan Konfigurasi Apache untuk Roundcube: Roundcube akan diakses melalui browser di server Apache. Setelah instalasi selesai, pastikan konfigurasi Apache untuk Roundcube telah diaktifkan:
-
-```bash
-sudo ln -s /etc/roundcube/apache.conf /etc/apache2/sites-available/roundcube.conf
-sudo a2ensite roundcube.conf
-sudo systemctl restart apache2
-```
-Akses Roundcube via Web Browser: Sekarang, Anda bisa mengakses Roundcube di browser Anda melalui URL berikut:
-
-arduino
-```bash
-http://192.168.1.36/roundcube
-```
-Gantilah 192.168.1.36 dengan IP server Ubuntu Anda.
-
-6. **Mengonfigurasi Firewall (UFW)**
-Jika firewall diaktifkan di server Ubuntu, pastikan untuk membuka port yang diperlukan oleh server mail dan webmail:
-
-Buka port yang diperlukan:
-
-```bash
-sudo ufw allow 25,143,587,993,80/tcp
-sudo ufw allow 443/tcp
-sudo ufw enable
-```
-Verifikasi status UFW: Pastikan aturan firewall sudah diterapkan dengan benar:
-
-```bash
-sudo ufw status
-```
-7. **Tes dan Verifikasi**
-Tes Mengirim Email: Akses Roundcube via browser (misalnya, http://192.168.1.36/roundcube) dan coba kirim email untuk memastikan server berfungsi dengan baik.
-
-Tes Menerima Email: Kirim email dari akun lain dan pastikan email tersebut muncul di inbox akun yang Anda gunakan di Roundcube.
-
-8. **(Opsional) Mengonfigurasi SSL/TLS**
-Untuk meningkatkan keamanan email Anda, disarankan untuk mengonfigurasi SSL/TLS untuk enkripsi email. Anda dapat menggunakan sertifikat dari Let's Encrypt atau sertifikat SSL lainnya.
-
-Install Certbot untuk SSL:
-
-```bash
-sudo apt install certbot python3-certbot-apache -y
-```
-Perbarui Konfigurasi Apache untuk SSL: Setelah Anda mendapatkan sertifikat SSL, update konfigurasi Apache dan restart layanan.
-
-Dengan mengikuti langkah-langkah di atas, Anda telah berhasil menginstal dan mengonfigurasi Mail Server di Ubuntu yang dapat diakses melalui WebMail menggunakan Roundcube. Pastikan untuk selalu memeriksa log dan memastikan port yang digunakan dapat diakses dari luar untuk mengirim dan menerima email dengan 
