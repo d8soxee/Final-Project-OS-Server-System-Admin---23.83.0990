@@ -1,4 +1,4 @@
-# Final-Project-OS-Server-System-Admin---23.83.0990
+![PteroConfigGenToken](https://github.com/user-attachments/assets/5a7d2a16-cfe6-41e7-b11a-207e1abbbfda)# Final-Project-OS-Server-System-Admin---23.83.0990
 Server's Name : MineShraft
 
 Repository ini saya gunakan untuk Dokumentasi Instalasi dan Konfigurasi Dedicated Server Minecraft, SSH Server, Web Server, Database Server, File Server, Mail Server. 
@@ -327,8 +327,8 @@ sudo systemctl enable --now wings
 ```
 7. **Alokasi Node**
 Alokasi adalah kombinasi IP dan Port yang dapat Anda tetapkan ke server. Setiap server yang dibuat harus memiliki setidaknya satu alokasi. Alokasi akan menjadi alamat IP antarmuka jaringan Anda. Dalam beberapa kasus, seperti saat berada di belakang NAT, alamat IP internal akan menjadi alamat IP. Untuk membuat alokasi baru, buka Node > node Anda > Alokasi.
-![PteroNodes2](https://github.com/user-attachments/assets/9ffc6d6f-36f1-4568-b7e5-a76f079a68c7)
-![PteroConsole](https://github.com/user-attachments/assets/3affd587-3bc8-426c-83ae-d24710884720)
+![PteroConfigGenToken](https://github.com/user-attachments/assets/360f8332-278e-4fae-8540-b76f0c2b5bcc)
+
 Jangan gunakan 127.0.0.1 untuk alokasi.
 
 **17 Desember 2024**
