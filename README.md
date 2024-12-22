@@ -28,6 +28,7 @@ Server Service
 ---
 
 **21 Desember 2024**
+
 **Mengaktifkan SSH di Ubuntu**
 
 Secara default, saat Ubuntu pertama kali diinstal, akses jarak jauh melalui SSH tidak diizinkan. Mengaktifkan SSH di Ubuntu cukup mudah.
@@ -56,8 +57,8 @@ sudo ufw allow ssh
 ```
 Selesai! Kini Anda dapat terhubung ke sistem Ubuntu melalui SSH dari komputer jarak jauh mana pun. Sistem Linux dan macOS telah memasang klien SSH secara default. Untuk terhubung dari komputer Windows, gunakan klien SSH seperti PuTTY .
 
+**Menghubungkan ke Server SSH**
 
-### **Menghubungkan ke Server SSH**
 Untuk terhubung ke mesin Ubuntu Anda melalui LAN, jalankan perintah ssh diikuti dengan nama pengguna dan alamat IP dalam format berikut:
 ```bash
 ssh username@ip_address
@@ -68,7 +69,6 @@ SSH memungkinkan akses jarak jauh ke server.
 ---
 **16 Desember 2024**
 
-### **Setup Pterodactyl**
 **Instalasi Depedency**:
 ```bash
 # Add "add-apt-repository" command
@@ -90,7 +90,8 @@ apt update
 # Install Dependencies
 apt -y install php8.3 php8.3-{common,cli,gd,mysql,mbstring,bcmath,xml,fpm,curl,zip} mariadb-server nginx tar unzip git redis-server
 ```
-### **Menginstall Composer**
+
+**Menginstall Composer**
 
 Composer adalah pengelola dependensi untuk PHP yang memungkinkan kita mengirimkan semua kode yang Anda perlukan untuk mengoperasikan Panel.
 ```bash
@@ -207,7 +208,9 @@ Terakhir, aktifkan layanan dan atur agar boot saat mesin dinyalakan.
 ```bash
 sudo systemctl enable --now pteroq.service
 ```
-### **Konfigurasi Web Server**
+
+**Konfigurasi Web Server**
+
 Masuk ke direktori nginx
 ```bash
 cd /etc/nginx/sites-enabled/default
@@ -274,7 +277,9 @@ sudo ln -s /etc/nginx/sites-available/pterodactyl.conf /etc/nginx/sites-enabled/
 # You need to restart nginx regardless of OS.
 sudo systemctl restart nginx
 ```
-### **Menginstall Wings**
+
+**Menginstall Wings**
+
 Wings adalah server control plane generasi berikutnya dari Pterodacty. Sebelum menginsatll wings kita haru menginstall Docker.
 
 **Menginstall Docker**
@@ -369,7 +374,8 @@ Setelah itu Kita harus membuat server minecraft nya, dengan cara klik menu serve
 
 **22 Desember 2024**
 
-##**File Sharing Server (Samba)**
+**File Sharing Server (Samba)**
+
 ```bash
 sudo apt update
 sudo apt install samba -y
