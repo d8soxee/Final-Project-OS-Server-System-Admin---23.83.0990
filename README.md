@@ -54,10 +54,10 @@ SSH memungkinkan akses jarak jauh ke server.
 ---
 **16 Desember 2024**
 
-### **2. Setup Database Server untuk Pterodactyl**
+### **Setup Database untuk Pterodactyl**
 Panel Pterodactyl membutuhkan **Nginx**, **PHP**, dan **Composer**.
 
-1. **Instalasi Depedency**:
+**Instalasi Depedency**:
 ```bash
 # Add "add-apt-repository" command
 apt -y install software-properties-common curl apt-transport-https ca-certificates gnupg
@@ -78,14 +78,14 @@ apt update
 # Install Dependencies
 apt -y install php8.3 php8.3-{common,cli,gd,mysql,mbstring,bcmath,xml,fpm,curl,zip} mariadb-server nginx tar unzip git redis-server
 ```
-2. **Menginstall Composer**
+**Menginstall Composer**
 Composer adalah pengelola dependensi untuk PHP yang memungkinkan kita mengirimkan semua kode yang Anda perlukan untuk mengoperasikan Panel.
 ```bash
 curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
 ```
 ![Composer](https://github.com/user-attachments/assets/d887f095-2f3e-4eae-beaf-7d1ba2f460d2)
 
-3. **Mengunduh File**
+**Mengunduh File**
 proses ini adalah membuat folder tempat panel akan berada, lalu memindahkannya ke folder yang baru dibuat tersebut.
 ```bash
 mkdir -p /var/www/pterodactyl
@@ -97,7 +97,7 @@ curl -Lo panel.tar.gz https://github.com/pterodactyl/panel/releases/latest/downl
 tar -xzvf panel.tar.gz
 chmod -R 755 storage/* bootstrap/cache/
 ```
-4. **Instalasi**
+**Instalasi**
 Sekarang semua file sudah didownload, kita perlu mengkonfigurasi beberapa aspek inti panel
 Konfigurasi DataBase
 
@@ -124,7 +124,7 @@ COMPOSER_ALLOW_SUPERUSER=1 composer install --no-dev --optimize-autoloader
 # the first time and do not have any Pterodactyl Panel data in the database.
 php artisan key:generate --force
 ```
-5. **Konfigurasi Environment**
+**Konfigurasi Environment**
 ```bash
 php artisan p:environment:setup
 php artisan p:environment:database
@@ -133,27 +133,27 @@ php artisan p:environment:database
 # custom SMTP server, select "smtp".
 php artisan p:environment:mail
 ```
-6. **Database Setup**
+**Database Setup**
 Sekarang kita perlu menyiapkan semua data dasar untuk Panel dalam database yang dibuat sebelumnya. Perintah di bawah ini mungkin memerlukan waktu untuk dijalankan. Harap JANGAN keluar dari proses hingga selesai! Perintah ini akan menyiapkan tabel database dan kemudian menambahkan semua Nests & Eggs untuk Pterodactyl.
 ```bash
 php artisan migrate --seed --force
 ```
-7. **Menambahkan user**
+**Menambahkan user**
 Selanjutnya, Kita perlu membuat administratif user agar dapat masuk ke panel. Untuk melakukannya, jalankan perintah di bawah ini. Saat ini, kata sandi harus memenuhi persyaratan berikut: 8 karakter, huruf besar dan kecil, minimal satu angka.
 ```bash
 php artisan p:user:make
 ```
-8. **Set Permission**
+**Set Permission**
 ```bash
 # If using NGINX, Apache or Caddy (not on RHEL / Rocky Linux / AlmaLinux)
 chown -R www-data:www-data /var/www/pterodactyl/*
 ```
-9. **Konfigurasi Crontab**
+**Konfigurasi Crontab**
 Hal pertama yang perlu kita lakukan adalah membuat cronjob baru yang berjalan setiap menit untuk memproses tugas-tugas Pterodactyl tertentu, seperti pembersihan sesi dan pengiriman tugas-tugas terjadwal ke daemon. Kita perlu membuka crontab Anda menggunakan sudo crontab -edan kemudian menempelkan baris di bawah ini
 ```bash
 * * * * * php /var/www/pterodactyl/artisan schedule:run >> /dev/null 2>&1
 ```
-10. **Creat Queue Worker**
+**Creat Queue Worker**
 Selanjutnya Anda perlu membuat systemd worker baru untuk menjaga proses antrian tetap berjalan di latar belakang. Antrean ini bertanggung jawab untuk mengirim email dan menangani banyak tugas latar belakang lainnya untuk Pterodactyl.
 Buat sebuah berkas dengan nama ```bash pteroq.service ``` pada ```bash /etc/systemd/system:```
 
