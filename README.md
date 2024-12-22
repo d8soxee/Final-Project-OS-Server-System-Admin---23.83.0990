@@ -79,6 +79,7 @@ apt update
 apt -y install php8.3 php8.3-{common,cli,gd,mysql,mbstring,bcmath,xml,fpm,curl,zip} mariadb-server nginx tar unzip git redis-server
 ```
 **Menginstall Composer**
+
 Composer adalah pengelola dependensi untuk PHP yang memungkinkan kita mengirimkan semua kode yang Anda perlukan untuk mengoperasikan Panel.
 ```bash
 curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
@@ -86,6 +87,7 @@ curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/loca
 ![Composer](https://github.com/user-attachments/assets/d887f095-2f3e-4eae-beaf-7d1ba2f460d2)
 
 **Mengunduh File**
+
 proses ini adalah membuat folder tempat panel akan berada, lalu memindahkannya ke folder yang baru dibuat tersebut.
 ```bash
 mkdir -p /var/www/pterodactyl
@@ -98,7 +100,8 @@ tar -xzvf panel.tar.gz
 chmod -R 755 storage/* bootstrap/cache/
 ```
 **Instalasi**
-Sekarang semua file sudah didownload, kita perlu mengkonfigurasi beberapa aspek inti panel
+
+Setelah semua file sudah didownload, kita perlu mengkonfigurasi beberapa aspek inti panel
 Konfigurasi DataBase
 
 Anda memerlukan pengaturan database dan pengguna dengan izin yang tepat yang dibuat untuk database tersebut.
@@ -125,6 +128,7 @@ COMPOSER_ALLOW_SUPERUSER=1 composer install --no-dev --optimize-autoloader
 php artisan key:generate --force
 ```
 **Konfigurasi Environment**
+
 ```bash
 php artisan p:environment:setup
 php artisan p:environment:database
@@ -134,11 +138,13 @@ php artisan p:environment:database
 php artisan p:environment:mail
 ```
 **Database Setup**
+
 Sekarang kita perlu menyiapkan semua data dasar untuk Panel dalam database yang dibuat sebelumnya. Perintah di bawah ini mungkin memerlukan waktu untuk dijalankan. Harap JANGAN keluar dari proses hingga selesai! Perintah ini akan menyiapkan tabel database dan kemudian menambahkan semua Nests & Eggs untuk Pterodactyl.
 ```bash
 php artisan migrate --seed --force
 ```
 **Menambahkan user**
+
 Selanjutnya, Kita perlu membuat administratif user agar dapat masuk ke panel. Untuk melakukannya, jalankan perintah di bawah ini. Saat ini, kata sandi harus memenuhi persyaratan berikut: 8 karakter, huruf besar dan kecil, minimal satu angka.
 ```bash
 php artisan p:user:make
@@ -149,11 +155,13 @@ php artisan p:user:make
 chown -R www-data:www-data /var/www/pterodactyl/*
 ```
 **Konfigurasi Crontab**
+
 Hal pertama yang perlu kita lakukan adalah membuat cronjob baru yang berjalan setiap menit untuk memproses tugas-tugas Pterodactyl tertentu, seperti pembersihan sesi dan pengiriman tugas-tugas terjadwal ke daemon. Kita perlu membuka crontab Anda menggunakan sudo crontab -edan kemudian menempelkan baris di bawah ini
 ```bash
 * * * * * php /var/www/pterodactyl/artisan schedule:run >> /dev/null 2>&1
 ```
 **Creat Queue Worker**
+
 Selanjutnya Anda perlu membuat systemd worker baru untuk menjaga proses antrian tetap berjalan di latar belakang. Antrean ini bertanggung jawab untuk mengirim email dan menangani banyak tugas latar belakang lainnya untuk Pterodactyl.
 Buat sebuah berkas dengan nama ```bash pteroq.service ``` pada ```bash /etc/systemd/system:```
 
@@ -187,7 +195,7 @@ Terakhir, aktifkan layanan dan atur agar boot saat mesin dinyalakan.
 ```bash
 sudo systemctl enable --now pteroq.service
 ```
-### **3. Konfigurasi Web Server**
+### **Konfigurasi Web Server**
 Masuk ke direktori nginx
 ```bash
 cd /etc/nginx/sites-enabled/default
@@ -255,19 +263,22 @@ sudo ln -s /etc/nginx/sites-available/pterodactyl.conf /etc/nginx/sites-enabled/
 sudo systemctl restart nginx
 ```
 ### **Menginstall Wings**
-Wings adalah server control plane generasi berikutnya dari Pterodacty
+Wings adalah server control plane generasi berikutnya dari Pterodacty. Sebelum menginsatll wings kita haru menginstall Docker.
 
-1. **Menginstall Docker**
+**Menginstall Docker**
+
 Untuk instalasi cepat Docker CE, Anda dapat menjalankan perintah di bawah ini:
 ```bash
 curl -sSL https://get.docker.com/ | CHANNEL=stable bash
 ```
-2. **Start Docker saat Booting**
+**Start Docker saat Booting**
+
 Jika Anda menggunakan sistem operasi dengan systemd (Ubuntu 16+, Debian 8+, CentOS 7+) jalankan perintah di bawah ini agar Docker dimulai saat Anda mem-boot komputer Anda.
 ```bash
 sudo systemctl enable --now docker
 ```
-2. **Mengaktifkan Swap**
+**Mengaktifkan Swap**
+
 ```bash
 GRUB_CMDLINE_LINUX_DEFAULT="swapaccount=1"
 ```
@@ -277,26 +288,30 @@ Konfigurasi GRUB
 Beberapa distro Linux mungkin mengabaikan GRUB_CMDLINE_LINUX_DEFAULT. Oleh karena itu, Anda mungkin harus menggunakan . GRUB_CMDLINE_LINUXsebagai gantinya jika . default tidak berfungsi untuk Anda.
 ```
 
-3. **Menginstall Wings**
+**Menginstall Wings**
+
 Langkah pertama untuk menginstal Wings adalah memastikan kita memiliki pengaturan struktur direktori yang diperlukan. Untuk melakukannya, jalankan perintah di bawah ini, yang akan membuat direktori dasar dan mengunduh file yang dapat dieksekusi Wings.
 ```bash
 sudo mkdir -p /etc/pterodactyl
 curl -L -o /usr/local/bin/wings "https://github.com/pterodactyl/wings/releases/latest/download/wings_linux_$([[ "$(uname -m)" == "x86_64" ]] && echo "amd64" || echo "arm64")"
 sudo chmod u+x /usr/local/bin/wings
 ```
-4. **Konfigurasi**
+**Konfigurasi**
+
 Setelah Anda memasang Wings dan komponen yang dibutuhkan, langkah selanjutnya adalah membuat node pada Panel yang telah Anda pasangBuka tampilan administratif Panel, pilih Nodes dari bilah sisi, dan di sisi kanan klik tombol Create New.
 
 Setelah Anda membuat node, klik node tersebut dan akan muncul tab yang disebut Konfigurasi. Salin konten blok kode, tempel ke dalam file baru bernama config.ymlin /etc/pterodactyldan simpan.
 
 
-5. **jalankan Wings**
+**jalankan Wings**
+
 Untuk memulai Wings, jalankan saja perintah di bawah ini, yang akan memulainya dalam mode debug. Setelah Anda memastikan bahwa Wings berjalan tanpa kesalahan, gunakan perintah CTRL+Cuntuk mengakhiri proses dan melakukan daemonisasi dengan mengikuti petunjuk di bawah ini. Bergantung pada koneksi internet server Anda.
 ```bash
 sudo wings --debug
 ```
 
-6. **Daemonizing(Menggunakan systemd)
+**Daemonizing(Menggunakan systemd)
+
 Menjalankan Wings di backgroun merupakan tugas yang mudah, pastikan saja ia berjalan tanpa kesalahan sebelum melakukannya. Letakkan konfigurasi di bawah ini dalam sebuah file bernama wings.serviced pada /etc/systemd/system direktori.
 ```bash
 [Unit]
@@ -324,7 +339,9 @@ Kemudian, jalankan perintah di bawah ini untuk memuat ulang systemd dan menjalan
 sudo systemctl enable --now wings
 ```
 **22 Desember 2024**
-7. **Alokasi Node**
+
+**Alokasi Node**
+
 Alokasi adalah kombinasi IP dan Port yang dapat Anda tetapkan ke server. Setiap server yang dibuat harus memiliki setidaknya satu alokasi. Alokasi akan menjadi alamat IP antarmuka jaringan Anda. Dalam beberapa kasus, seperti saat berada di belakang NAT, alamat IP internal akan menjadi alamat IP. Untuk membuat alokasi baru, buka Node > node Anda > Alokasi.
 ![PteroLogin](https://github.com/user-attachments/assets/f68303e1-cfef-438d-ae53-65b267ffde31)
 ![PteroNodes](https://github.com/user-attachments/assets/f8ae9593-5598-4826-b81a-7cf651816f83)
