@@ -386,20 +386,20 @@ Sebelum melakukan Konfigurasi kita harus membuat username dan password Samba di 
 
 Pastikan user sudah ada di sistem Linux. Jika belum ada, buat user baru dengan perintah berikut (ganti sambauser dengan nama pengguna yang diinginkan):
 ```bash
-sudo adduser sambauser
+sudo adduser praditya
 ```
 Anda akan diminta membuat password untuk user tersebut.
 Tambahkan user tersebut ke Samba. Gunakan perintah berikut untuk menambahkan user Samba dan mengatur passwordnya:
 
 ```bash
-sudo smbpasswd -a sambauser
+sudo smbpasswd -a praditya
 ```
 
 Anda akan diminta memasukkan password Samba untuk user tersebut.
 Aktifkan user Samba. Pastikan user Samba diaktifkan dengan perintah:
 
 ```bash
-sudo smbpasswd -e sambauser
+sudo smbpasswd -e praditya
 ```
 **Konfigurasi Direktori Berbagi**
 
