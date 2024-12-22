@@ -15,8 +15,7 @@ Ubuntu server 20.04
 
 ---
 **21 Desember 2024**
-### **1. Setup SSH Server**
-1. **Mengaktifkan SSH di Ubuntu**
+### **Mengaktifkan SSH di Ubuntu**
 Secara default, saat Ubuntu pertama kali diinstal, akses jarak jauh melalui SSH tidak diizinkan. Mengaktifkan SSH di Ubuntu cukup mudah.
 Lakukan langkah-langkah berikut sebagai root atau pengguna dengan menggunakan sudo untuk menginstal dan mengaktifkan SSH pada Ubuntu:
 ```bash
@@ -44,7 +43,7 @@ sudo ufw allow ssh
 Selesai! Kini Anda dapat terhubung ke sistem Ubuntu melalui SSH dari komputer jarak jauh mana pun. Sistem Linux dan macOS telah memasang klien SSH secara default. Untuk terhubung dari komputer Windows, gunakan klien SSH seperti PuTTY .
 
 
-2. **Menghubungkan ke Server SSH**
+### **Menghubungkan ke Server SSH**
 Untuk terhubung ke mesin Ubuntu Anda melalui LAN, jalankan perintah ssh diikuti dengan nama pengguna dan alamat IP dalam format berikut:
 ```bash
 ssh username@ip_address
